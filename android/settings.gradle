@@ -1,0 +1,51 @@
+// settings.gradle
+// ✅ Fully compatible with Gradle 8.9, AGP 8.7, Kotlin 2.0+, and Flutter 3.24+
+
+pluginManagement {
+    // --- Flutter SDK path setup ---
+    def flutterSdkPath = {
+        def properties = new Properties()
+        file("local.properties").withInputStream { properties.load(it) }
+        def path = properties.getProperty("flutter.sdk")
+        assert path != null : "❌ flutter.sdk not set in local.properties"
+        return path
+    }
+
+    settings.ext.flutterSdkPath = flutterSdkPath()
+
+    // Include Flutter's own Gradle tools
+    includeBuild("${settings.ext.flutterSdkPath}/packages/flutter_tools/gradle")
+
+    // Plugin repositories
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+// --- Central plugin versions ---
+plugins {
+    id "dev.flutter.flutter-plugin-loader" version "1.0.0"
+    id "com.android.application" version "8.9.1" apply false     // ✅ AGP 8.7
+    id "org.jetbrains.kotlin.android" version "2.2.0" apply false // ✅ Kotlin 2.0
+    id "com.google.gms.google-services" version "4.4.2" apply false // ✅ GMS 4.4.2
+}
+
+// --- Central dependency repository management (Gradle 8+ required) ---
+dependencyResolutionManagement {
+    // ✅ Allow Flutter plugin to add its own Maven repo
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        // ✅ Explicitly include Flutter’s Maven repository
+        maven { url "https://storage.googleapis.com/download.flutter.io" }
+    }
+}
+
+// --- Project name & module includes ---
+rootProject.name = "Hellodish vendor"
+include(":app")

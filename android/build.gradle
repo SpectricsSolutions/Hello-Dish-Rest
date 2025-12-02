@@ -1,0 +1,67 @@
+// Top-level build.gradle (Project build script)
+// ✅ Updated for Gradle 8+, Android Gradle Plugin 8+, Java 17 compatibility
+// ✅ Fixed resource shrinker issue for library modules
+// ✅ Clean and consistent build directories
+
+rootProject.buildDir = "../build"
+
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+
+    afterEvaluate { project ->
+        if (project.hasProperty("android")) {
+            project.android {
+
+                // ✅ Ensure namespace is defined (AGP 8+ requirement)
+                if (!namespace) {
+                    namespace = project.group ?: "com.example.${project.name}"
+                }
+
+                // ✅ Set Java 17 compatibility
+                compileOptions {
+                    sourceCompatibility = JavaVersion.VERSION_17
+                    targetCompatibility = JavaVersion.VERSION_17
+                }
+
+                // ✅ Kotlin compile setup for JVM 17
+                tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+                    kotlinOptions {
+                        jvmTarget = "17"
+                        freeCompilerArgs += [
+                                "-Xjvm-default=all",
+                                "-Xopt-in=kotlin.RequiresOptIn"
+                        ]
+                    }
+                }
+
+                // ✅ Use Gradle toolchain (recommended)
+                java {
+                    toolchain {
+                        languageVersion = JavaLanguageVersion.of(17)
+                    }
+                }
+
+                // ✅ Apply resource shrink only to the main app module
+                buildTypes {
+                    release {
+                        // Only enable shrinking for :app module, not for libraries
+                        if (project.name == "app") {
+                            minifyEnabled true
+                            shrinkResources true
+                            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                                    'proguard-rules.pro'
+                        } else {
+                            minifyEnabled false
+                            shrinkResources false
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// ✅ Clean task for consistent builds
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}

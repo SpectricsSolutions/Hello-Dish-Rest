@@ -1,0 +1,97 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65536 bytes. Error detail: Failed to commit metaspace.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   This process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Zero Based Compressed Oops mode in which the Java heap is
+#     placed in the first 32GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 32GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (virtualSpaceNode.cpp:113), pid=14388, tid=12856
+#
+# JRE version: OpenJDK Runtime Environment (21.0.6) (build 21.0.6+-13391695-b895.109)
+# Java VM: OpenJDK 64-Bit Server VM (21.0.6+-13391695-b895.109, mixed mode, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.prefs/java.util.prefs=ALL-UNNAMED --add-opens=java.base/java.nio.charset=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED -Xmx4096m -Dfile.encoding=UTF-8 -Duser.country=IN -Duser.language=en -Duser.variant -javaagent:C:\Users\Anand\.gradle\wrapper\dists\wrapper\dists\gradle-8.5-all\3zlzzgtsutfj0pbojr50n2l7z\gradle-8.5\lib\agents\gradle-instrumentation-agent-8.5.jar org.gradle.launcher.daemon.bootstrap.GradleDaemon 8.5
+
+Host: Intel(R) Core(TM) i5-10210U CPU @ 1.60GHz, 8 cores, 7G,  Windows 11 , 64 bit Build 26100 (10.0.26100.5074)
+Time: Wed Oct 15 04:21:47 2025 India Standard Time elapsed time: 278.906557 seconds (0d 0h 4m 38s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000002a3bda2e7c0):  JavaThread "Exec process Thread 5"        [_thread_in_vm, id=12856, stack(0x000000c2cbc00000,0x000000c2cbd00000) (1024K)]
+
+Stack: [0x000000c2cbc00000,0x000000c2cbd00000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x6d0639]
+V  [jvm.dll+0x85eb03]
+V  [jvm.dll+0x86105e]
+V  [jvm.dll+0x861743]
+V  [jvm.dll+0x27e6e6]
+V  [jvm.dll+0x8599de]
+V  [jvm.dll+0x674055]
+V  [jvm.dll+0x1e3131]
+V  [jvm.dll+0x1e2efe]
+V  [jvm.dll+0x6769a8]
+V  [jvm.dll+0x6767e2]
+V  [jvm.dll+0x674a4e]
+V  [jvm.dll+0x26adf0]
+V  [jvm.dll+0x21595b]
+V  [jvm.dll+0x20ae49]
+V  [jvm.dll+0x5b1ff3]
+V  [jvm.dll+0x21c88b]
+V  [jvm.dll+0x7d60cc]
+V  [jvm.dll+0x7d7172]
+V  [jvm.dll+0x7d7734]
+V  [jvm.dll+0x7d73c8]
+V  [jvm.dll+0x26d44b]
+V  [jvm.dll+0x3d50de]
+C  0x000002a39b25a97f
+
+The last pc belongs to new (printed below).
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+j  java.io.PrintWriter.<clinit>()V+0 java.base@21.0.6
+v  ~StubRoutines::call_stub 0x000002a39b24100d
+j  org.gradle.internal.logging.text.AbstractStyledTextOutput.exception(Ljava/lang/Throwable;)Lorg/gradle/internal/logging/text/StyledTextOutput;+8
+j  org.gradle.internal.logging.events.LogEvent.render(Lorg/gradle/internal/logging/text/StyledTextOutput;)V+30
+j  org.gradle.internal.logging.console.StyledTextOutputBackedRenderer.onOutput(Lorg/gradle/internal/logging/events/OutputEvent;)V+240
+j  org.gradle.internal.logging.sink.LogEventDispatcher.dispatch(Lorg/gradle/internal/logging/events/OutputEvent;Lorg/gradle/internal/logging/events/OutputEventListener;)V+6
+j  org.gradle.internal.logging.sink.LogEventDispatcher.onOutput(Lorg/gradle/internal/logging/events/OutputEvent;)V+44
+j  org.gradle.internal.logging.sink.OutputEventRenderer$LazyListener.onOutput(Lorg/gradle/internal/logging/events/OutputEvent;)V+89
+J 11522 c2 java.lang.invoke.LambdaForm$MH+0x0000000800229000.invoke(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object; java.base@21.0.6 (64 bytes) @ 0x000002a39bda09b0 [0x000002a39bda0920+0x0000000000000090]
+J 11520 c2 org.gradle.internal.dispatch.ReflectionDispatch.dispatch(Ljava/lang/Object;)V (9 bytes) @ 0x000002a39bd9dbf0 [0x000002a39bd9d340+0x00000000000008b0]
+J 22884 c2 org.gradle.internal.event.ListenerBroadcast.dispatch(Ljava/lang/Object;)V (9 bytes) @ 0x000002a39b98df74 [0x000002a39b98dd60+0x0000000000000214]
+J 22170 c2 org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(Ljava/lang/Object;Ljava/lang/reflect/Method;[Ljava/lang/Object;)Ljava/lang/Object; (184 bytes) @ 0x000002a39c4fa8a4 [0x000002a39c4fa480+0x0000000000000424]
+J 10144 c1 jdk.proxy1.$Proxy0.onOutput(Lorg/gradle/internal/logging/events/OutputEvent;)V jdk.proxy1 (34 bytes) @ 0x000002a394ced0dc [0x000002a394cecde0+0x00000000000002fc]
+J 27279 c1 org.gradle.internal.logging.sink.OutputEventTransformer.invokeListener(Lorg/gradle/internal/logging/events/OutputEvent;)V (28 bytes) @ 0x000002a396773714 [0x000002a3967735c0+0x0000000000000154]
+j  org.gradle.internal.logging.sink.OutputEventTransformer.onOutput(Lorg/gradle/internal/logging/events/OutputEvent;)V+357
+j  org.gradle.internal.logging.sink.OutputEventRenderer.onOutput(Lorg/gradle/internal/logging/events/OutputEvent;)V+78
+j  org.gradle.internal.logging.sink.OutputEventListenerManager$1.onOutput(Lorg/gradle/internal/logging/events/OutputEvent;)V+8
+j  org.gradle.internal.logging.slf4j.OutputEventListenerBackedLogger.log(Lorg/gradle/api/logging/LogLevel;Ljava/lang/Throwable;Ljava/lang/String;Lorg/gradle/internal/operations/OperationIdentifier;)V+40
+j  org.gradle.internal.logging.slf4j.BuildOperationAwareLogger.log(Lorg/gradle/api/logging/LogLevel;Ljava/lang/Throwable;Ljava/lang/String;)V+10
+j  org.gradle.internal.logging.slf4j.BuildOperationAwareLogger.error(Ljava/lang/String;Ljava/lang/Throwable;)V+13
+j  org.gradle.internal.logging.slf4j.OutputEventListenerBackedLogger.error(Ljava/lang/String;Ljava/lang/Throwable;)V+3
+j  org.gradle.process.internal.streams.ExecOutputHandleRunner.forwardContent()V+130
+j  org.gradle.process.internal.streams.ExecOutputHandleRunner.run()V+1
+J 29126 c2 org.gradle.internal.concurrent.AbstractManagedExecutor$1.run()V (57 bytes) @ 0x000002a39c8a4394 [0x000002a39c8a3fe0+0x00000000000003b4]
+J 24796 c1 java.util.concurrent.ThreadPoolExecutor.runWorker(Ljava/util/concurrent/ThreadPoolExecutor$Worker;)V java.base@21.0.6 (187 bytes) @ 0x000002a3940711d4 [0x000002a394070840+0x0000000000000994]
+j  java.util.concurrent.ThreadPoolExecutor$Worker.run()V+5 java.base@21.0.6
+j  java.lang.Thread.runWith(Ljava/lang/Object;Ljava/lang/Runnable;)V+5 java.base@21.0.6
+j  java.lang.Thread.run()V+19 java.base@21.0.6
+v  ~StubRoutines::call_stub 0x000002a39b24100d
+new  187 new  [0x000002a39b25a800, 0x000002a39b25aa08]  520 bytes
